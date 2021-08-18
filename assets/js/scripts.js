@@ -19,8 +19,31 @@ questions = [
 ];
 
 askedquestions = [];
-time = 60;
+time = 10;
 
+
+var starttimer = setInterval(function() {
+    if(time > 1){
+        console.log(time);
+       // document.getElementById("#timeleft").innerHTML = "<p>'You have ' + time + ' seconds left.'</p>";
+        time--;
+    }
+    else if(time === 1){
+        //document.getElementById("#timeleft").value = time;
+        console.log(time);
+        time--;
+    }
+    else if(time === 0) {
+        console.log(time);
+        //document.getElementById("#timeleft").value = time;
+        clearInterval(starttimer);
+        //document.getElementById("#timeleft").value = "Times up!";
+    }    
+}, 1000);
+
+
+
+/*
 $("#starttest").click(function() {
     //while(askedquestions.length < questions.length) {
         //Math.floor(Math.random())
@@ -41,4 +64,6 @@ var timer = setInterval(function() {
         clearInterval(timer);
         $("#timeleft").val("Times up!");
     }
-}, 1000);
+}, 1000);*/
+
+document.getElementById("starttest").addEventListener("click", starttimer);
