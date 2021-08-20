@@ -17,53 +17,51 @@ questions = [
     },
 
 ];
+var countdown = document.getElementById("timeleft");
+var questiona = document.getElementById("questionarea");
+var askedquestions = [];
+var time = 10;
 
-askedquestions = [];
-time = 10;
+var starttimer = function() {
+    var timeinterval = setInterval(function() {
+        if(time > 1){
+            console.log(time);
+            countdown.textContent = "You have "  + time + " seconds left.";
+            time--;
+        }
+        else if(time === 1){
+            countdown.textContent = "You have "  + time + " second left.";
+            console.log(time);
+            time--;
+        }
+        else if(time === 0) {
+            console.log(time);
+            clearInterval(timeinterval);
+            countdown.textContent = "Times up!";
+        }    
+    }, 1000);
+};
 
+var askquestion = function() {
+    var qn = 0;
+    if(askedquestions.length < questions.length) {
+        var questiontoask = questions[qn].q;
+        //questiona.innerHTML = questiontoask;
+        var answerOptions = [];
+        var answer = questions[qn].ca;
+        answerOptions.push(questions[qn].a);
+        answerOptions.push(questions[qn].b);
+        answerOptions.push(questions[qn].c);
+        answerOptions.push(questions[qn].d);
 
-var starttimer = setInterval(function() {
-    if(time > 1){
-        console.log(time);
-       // document.getElementById("#timeleft").innerHTML = "<p>'You have ' + time + ' seconds left.'</p>";
-        time--;
+        var qform = document.createElement("form");
+        var qfield = document.createElement("h2");
+        qfield.setAttribute("text", questiontoask);
+        qform.appendChild(qfield);
+        questiona.appendChild(qform);
     }
-    else if(time === 1){
-        //document.getElementById("#timeleft").value = time;
-        console.log(time);
-        time--;
-    }
-    else if(time === 0) {
-        console.log(time);
-        //document.getElementById("#timeleft").value = time;
-        clearInterval(starttimer);
-        //document.getElementById("#timeleft").value = "Times up!";
-    }    
-}, 1000);
+};
 
-
-
-/*
-$("#starttest").click(function() {
-    //while(askedquestions.length < questions.length) {
-        //Math.floor(Math.random())
-    //}
-    timer();
-});
-
-var timer = setInterval(function() {
-    if(time > 1) {
-        $("#timeleft").val("You have " + time + " seconds left");
-        time--;
-    }
-    else if(time === 1) {
-        $("#timeleft").val("You have " + time + " second left");
-        time--;
-    }
-    else if(time === 0) {
-        clearInterval(timer);
-        $("#timeleft").val("Times up!");
-    }
-}, 1000);*/
 
 document.getElementById("starttest").addEventListener("click", starttimer);
+document.getElementById("starttest").addEventListener("click", askquestion);
