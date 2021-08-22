@@ -1,0 +1,17 @@
+body {
+    margin: 0 15;
+}
+
+.answeroptions {
+    font-size: large;
+    display: block;
+}
+
+.submitbutton {
+    display: block;
+}
+
+header {
+    align-items: center;
+    margin: 0 auto;
+}
