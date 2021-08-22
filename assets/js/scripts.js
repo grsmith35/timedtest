@@ -13,7 +13,7 @@ questions = [
         "b": "document.getElementByName('p').innerHTML = 'Hello World!';",
         "c": "#demo.innerHTML = 'Hello World!';",
         "d": "document.getElement('p').innerHTML = 'Hello World!';",
-        "ca": "document.getElementById('demo').innerHTML = 'Hello World!';"
+        "ca": "0"
     },
 
 ];
@@ -23,6 +23,7 @@ var askedquestions = [];
 var time = 10;
 var questionanswer = "";
 var qn = 0;
+var answeredcorrectly = 0;
 
 var starttimer = function() {
     var timeinterval = setInterval(function() {
@@ -40,6 +41,14 @@ var starttimer = function() {
             console.log(time);
             clearInterval(timeinterval);
             countdown.textContent = "Times up!";
+            var questionsection = document.getElementById("questionarea");
+            var oldquestion = document.getElementById("questionbox");
+            var testfinished = document.createElement("h4");
+            testfinished.textContent = "Test time finished! Your score is " + answeredcorrectly + "/10!";
+            if(oldquestion){
+                oldquestion.remove();
+            }
+            questionsection.appendChild(testfinished);
         }    
     }, 1000);
 };
@@ -47,7 +56,7 @@ var starttimer = function() {
 var askquestion = function() {
     if(askedquestions.length < questions.length) {
         var questiontoask = questions[qn].q;
-        //questiona.innerHTML = questiontoask;
+        askedquestions.push(questions[qn]);
         var answerOptions = [];
         questionanswer = questions[qn].ca;
         answerOptions.push(questions[qn].a);
@@ -57,7 +66,7 @@ var askquestion = function() {
         console.log(answerOptions);
 
         var qform = document.createElement("form");
-        //qform.textContent = "Test area that i'm trying to hit."
+        qform.setAttribute("id", "questionbox");
         var qfield = document.createElement("h2");
         qfield.textContent = questiontoask;
         qform.appendChild(qfield);
@@ -80,6 +89,7 @@ var askquestion = function() {
         subbutton.textContent ="Submit";
         qform.appendChild(subbutton);
         questiona.appendChild(qform);
+        qn++;
     }
 };
 
@@ -90,16 +100,21 @@ document.addEventListener('click', function(event){
         var radios = document.getElementsByTagName("input");
         for(i in radios){
             if (radios[i].type === 'radio' && radios[i].checked){
-                inputanswer = radios[i].id;
-                console.log(inputanswer);
-                inputanswer.replace("option", "");
-                console.log(inputanswer);
+                var inputanswer = radios[i].id;
+                var aordernumber = inputanswer.replace("option", "");
+                console.log(aordernumber);
+                if(aordernumber === questionanswer){
+                    console.log("You got it right.");
+                    answeredcorrectly++;
+                }
             }
         }
+        var oldquestion = document.getElementById("questionbox");
+        oldquestion.remove();
+        askquestion();
     }
 });
 
 
 document.getElementById("starttest").addEventListener("click", starttimer);
 document.getElementById("starttest").addEventListener("click", askquestion);
-document
