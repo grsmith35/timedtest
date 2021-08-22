@@ -96,17 +96,14 @@ var username = "";
 var starttimer = function() {
     var timeinterval = setInterval(function() {
         if(time > 1){
-            console.log(time);
             countdown.textContent = "You have "  + time + " seconds left.";
             time--;
         }
         else if(time === 1){
             countdown.textContent = "You have "  + time + " second left.";
-            console.log(time);
             time--;
         }
         else if(time === 0) {
-            console.log(time);
             clearInterval(timeinterval);
             countdown.textContent = "Times up!";
             var questionsection = document.getElementById("questionarea");
@@ -160,6 +157,7 @@ var askquestion = function() {
         //iterate through the answer options and create a div then add a radio button and label for each.
         for(var i = 0; i < answerOptions.length; i++){
             var qadiv = document.createElement("div");
+            qadiv.setAttribute("id", "qdiv");
             var aoption = document.createElement("input");
             aoption.setAttribute("name", 'answer_options');
             aoption.setAttribute("id", "option" + i);
@@ -169,7 +167,8 @@ var askquestion = function() {
             aoptionlabel.setAttribute("for", "option" + i);
             aoptionlabel.textContent = answerOptions[i];
             qadiv.appendChild(aoptionlabel);
-            qadiv.addClass("answeroptions");
+            //qadiv.addClass("answeroptions");
+            $("qdiv").addClass("answeroptions");
             //qform.appendChild(aoption);
             qform.appendChild(qadiv);
         }
@@ -189,7 +188,6 @@ var askquestion = function() {
 //listener for the submit button in each questions, then checks the answer.
 document.addEventListener('click', function(event){
     if(event.target.id === 'submitbutton'){
-        console.log("answered question");
         var inputanswer = "";
         var radios = document.getElementsByTagName("input");
         //get radio buttons and find out which one is marked then check for true or false.
@@ -199,7 +197,6 @@ document.addEventListener('click', function(event){
                 var aordernumber = inputanswer.replace("option", "");
                 console.log(aordernumber);
                 if(aordernumber === questionanswer){
-                    console.log("You got it right.");
                     answeredcorrectly++;
                 }
                 //if they get it wrong deduct 5 seconds from time
