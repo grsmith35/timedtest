@@ -116,7 +116,9 @@ var starttimer = function() {
             if(oldquestion){
                 oldquestion.remove();
             }
+            //clear question area when time hits 0
             questionsection.appendChild(testfinished);
+            //call function to see if user wants to save score.
             savescores();
         }    
     }, 1000);
@@ -135,8 +137,10 @@ var savescores = function() {
 
 // function to create a question, then create elements and display question on screen.
 var askquestion = function() {
+    //remove the start button when test starts
     var sbutton = document.getElementById("starttest");
     sbutton.remove();
+    //extract question from questionstoask array
     if(askedquestions.length < questions.length) {
         var questiontoask = questions[qn].q;
         askedquestions.push(questions[qn]);
@@ -146,13 +150,14 @@ var askquestion = function() {
         answerOptions.push(questions[qn].b);
         answerOptions.push(questions[qn].c);
         answerOptions.push(questions[qn].d);
-        console.log(answerOptions);
 
+        //create form for question to be displayed in
         var qform = document.createElement("form");
         qform.setAttribute("id", "questionbox");
         var qfield = document.createElement("h2");
         qfield.textContent = questiontoask;
         qform.appendChild(qfield);
+        //iterate through the answer options and create a div then add a radio button and label for each.
         for(var i = 0; i < answerOptions.length; i++){
             var qadiv = document.createElement("div");
             var aoption = document.createElement("input");
@@ -168,6 +173,7 @@ var askquestion = function() {
             //qform.appendChild(aoption);
             qform.appendChild(qadiv);
         }
+        //create button to submit answer and append them to form
         var subbutton = document.createElement("button");
         subbutton.setAttribute("type", 'button');
         subbutton.setAttribute("id", "submitbutton");
@@ -175,6 +181,7 @@ var askquestion = function() {
         subbutton.textContent ="Submit";
         qform.appendChild(subbutton);
         questiona.appendChild(qform);
+        //increase questiontoask number for new question
         qn++;
     }
 };
@@ -185,6 +192,7 @@ document.addEventListener('click', function(event){
         console.log("answered question");
         var inputanswer = "";
         var radios = document.getElementsByTagName("input");
+        //get radio buttons and find out which one is marked then check for true or false.
         for(i in radios){
             if (radios[i].type === 'radio' && radios[i].checked){
                 var inputanswer = radios[i].id;
@@ -194,11 +202,13 @@ document.addEventListener('click', function(event){
                     console.log("You got it right.");
                     answeredcorrectly++;
                 }
+                //if they get it wrong deduct 5 seconds from time
                 else {
                     time -= 5;
                 }
             }
         }
+        //remove old question form and create new one.
         var oldquestion = document.getElementById("questionbox");
         oldquestion.remove();
         askquestion();
