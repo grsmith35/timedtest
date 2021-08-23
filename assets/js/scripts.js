@@ -86,7 +86,7 @@ questions = [
 var countdown = document.getElementById("timeleft");
 var questiona = document.getElementById("questionarea");
 var askedquestions = [];
-var time = 1000;
+var time = 60;
 var questionanswer = "";
 var qn = 0;
 var answeredcorrectly = 0;
@@ -136,7 +136,10 @@ var savescores = function() {
 var askquestion = function() {
     //remove the start button when test starts
     var sbutton = document.getElementById("starttest");
-    sbutton.remove();
+    if(sbutton) {
+        sbutton.remove();
+    }
+    
     //extract question from questionstoask array
     if(askedquestions.length < questions.length) {
         var questiontoask = questions[qn].q;
@@ -158,8 +161,6 @@ var askquestion = function() {
         for(var i = 0; i < answerOptions.length; i++){
             //create div to store 1 radio button in
             var qadiv = document.createElement("div");
-            //add style class to the div.
-            qadiv.addClass("answeroptions");
             qadiv.setAttribute("id", "qdiv");
             var aoption = document.createElement("input");
             aoption.setAttribute("name", 'answer_options');
@@ -170,16 +171,12 @@ var askquestion = function() {
             aoptionlabel.setAttribute("for", "option" + i);
             aoptionlabel.textContent = answerOptions[i];
             qadiv.appendChild(aoptionlabel);
-            
-            //$("qdiv").addClass("answeroptions");
-            //qform.appendChild(aoption);
             qform.appendChild(qadiv);
         }
         //create button to submit answer and append them to form
         var subbutton = document.createElement("button");
         subbutton.setAttribute("type", 'button');
         subbutton.setAttribute("id", "submitbutton");
-        subbutton.setAttribute("class", "submitbutton")
         subbutton.textContent ="Submit";
         qform.appendChild(subbutton);
         questiona.appendChild(qform);
@@ -198,7 +195,6 @@ document.addEventListener('click', function(event){
             if (radios[i].type === 'radio' && radios[i].checked){
                 var inputanswer = radios[i].id;
                 var aordernumber = inputanswer.replace("option", "");
-                console.log(aordernumber);
                 if(aordernumber === questionanswer){
                     answeredcorrectly++;
                 }
