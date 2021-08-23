@@ -156,7 +156,10 @@ var askquestion = function() {
         qform.appendChild(qfield);
         //iterate through the answer options and create a div then add a radio button and label for each.
         for(var i = 0; i < answerOptions.length; i++){
+            //create div to store 1 radio button in
             var qadiv = document.createElement("div");
+            //add style class to the div.
+            qadiv.addClass("answeroptions");
             qadiv.setAttribute("id", "qdiv");
             var aoption = document.createElement("input");
             aoption.setAttribute("name", 'answer_options');
@@ -167,8 +170,8 @@ var askquestion = function() {
             aoptionlabel.setAttribute("for", "option" + i);
             aoptionlabel.textContent = answerOptions[i];
             qadiv.appendChild(aoptionlabel);
-            //qadiv.addClass("answeroptions");
-            $("qdiv").addClass("answeroptions");
+            
+            //$("qdiv").addClass("answeroptions");
             //qform.appendChild(aoption);
             qform.appendChild(qadiv);
         }
